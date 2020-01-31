@@ -37,25 +37,16 @@ class Tox(TestCommand):
         errno = tox.cmdline(args=args)
         sys.exit(errno)
 
-
-version_file_name = "cursesmenu/version.py"
-version_file_contents = open("cursesmenu/version.py", "rt").read()
-version_regex = r"^__version__ = ['\"]([^'\"]*)['\"]"
-match = re.search(version_regex, version_file_contents, re.M)
-if match:
-    __version__ = match.group(1)
-else:
-    raise RuntimeError("Unable to find version string in %s." % (version_file_name,))
+__version__ = "0.5.1"
 
 setup(
-    name='curses-menu-huffmsa',
+    name='curses-menu',
     version=__version__,
     url='http://github.com/huffmsa/curses-menu.git',
     license='MIT',
     author='Sam Huffman',
     author_email='huffmsa@gmail.com',
     description='A simple console menu system using curses',
-    long_description=read("README.rst", "CHANGELOG.rst"),
     packages=find_packages(),
     setup_requires=['pytest-runner'],
     tests_require=['tox'],

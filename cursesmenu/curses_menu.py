@@ -200,7 +200,7 @@ class CursesMenu(object):
 
         self.screen.border(0)
         if self.title is not None:
-            self.screen.addstr(2, 2, self.title, curses.A_STANDOUT)
+            self.screen.addstr(2, 2, self.title, curses.A_NORMAL)
         if self.subtitle is not None:
             self.screen.addstr(4, 2, self.subtitle, curses.A_BOLD)
 
@@ -344,7 +344,7 @@ class CursesMenu(object):
 
     def _set_up_colors(self):
         curses.init_pair(1, curses.COLOR_BLACK, curses.COLOR_WHITE)
-        self.highlight = curses.A_NORMAL
+        self.highlight = self.highlight = curses.color_pair(1)
         self.normal = curses.A_NORMAL
 
     def clear_screen(self):
