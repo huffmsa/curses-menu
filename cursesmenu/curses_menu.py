@@ -182,6 +182,7 @@ class CursesMenu(object):
     def _main_loop(self, scr):
         if scr is not None:
             CursesMenu.stdscr = scr
+        CursesMenu.stdscr.clear()
         self.screen = curses.newpad(len(self.items) + 6, CursesMenu.stdscr.getmaxyx()[1])
         self._set_up_colors()
         curses.curs_set(0)
@@ -343,7 +344,7 @@ class CursesMenu(object):
 
     def _set_up_colors(self):
         curses.init_pair(1, curses.COLOR_BLACK, curses.COLOR_WHITE)
-        self.highlight = curses.color_pair(1)
+        self.highlight = curses.A_NORMAL
         self.normal = curses.A_NORMAL
 
     def clear_screen(self):
@@ -351,6 +352,9 @@ class CursesMenu(object):
         Clear the screen belonging to this menu
         """
         self.screen.clear()
+        screen_rows, screen_cols = CursesMenu.stdscr.getmaxyx()
+        top_row = 0
+        self.screen.refresh(top_row, 0, 0, 0, screen_rows - 1, screen_cols - 1)
 
 
 class MenuItem(object):
