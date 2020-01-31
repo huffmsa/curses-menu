@@ -48,12 +48,12 @@ else:
     raise RuntimeError("Unable to find version string in %s." % (version_file_name,))
 
 setup(
-    name='curses-menu',
+    name='curses-menu-huffmsa',
     version=__version__,
-    url='http://github.com/pmbarrett314/curses-menu',
+    url='http://github.com/huffmsa/curses-menu.git',
     license='MIT',
-    author='Paul Barrett',
-    author_email='pmbarrett314@gmail.com',
+    author='Sam Huffman',
+    author_email='huffmsa@gmail.com',
     description='A simple console menu system using curses',
     long_description=read("README.rst", "CHANGELOG.rst"),
     packages=find_packages(),
