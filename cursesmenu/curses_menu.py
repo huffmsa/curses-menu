@@ -98,8 +98,8 @@ class CursesMenu(object):
             self.add_exit()
         if self.screen:
             max_row, max_cols = self.screen.getmaxyx()
-            if max_row < 6 + len(self.items):
-                self.screen.resize(6 + len(self.items), max_cols)
+            if max_row < 10 + len(self.items):
+                self.screen.resize(10 + len(self.items), max_cols)
             self.draw()
 
     def add_exit(self):
@@ -183,7 +183,7 @@ class CursesMenu(object):
         if scr is not None:
             CursesMenu.stdscr = scr
         CursesMenu.stdscr.clear()
-        self.screen = curses.newpad(len(self.items) + 6, CursesMenu.stdscr.getmaxyx()[1])
+        self.screen = curses.newpad(len(self.items) + 10, CursesMenu.stdscr.getmaxyx()[1])
         self._set_up_colors()
         curses.curs_set(0)
         CursesMenu.stdscr.refresh()
@@ -198,26 +198,32 @@ class CursesMenu(object):
         Redraws the menu and refreshes the screen. Should be called whenever something changes that needs to be redrawn.
         """
 
+        screen_rows, screen_cols = CursesMenu.stdscr.getmaxyx()
+        item_start = 5
         self.screen.border(0)
         if self.title is not None:
-            self.screen.addstr(2, 4, self.title, curses.A_NORMAL)
+            self.screen.addstr(2, 2, f'{self.title} {screen_rows}', curses.A_NORMAL)
         if self.subtitle is not None:
-            self.screen.addstr(6, 2, self.subtitle, curses.A_BOLD)
+            item_start = 5 + len(self.subtitle)
+            for index, item in enumerate(self.subtitle):
+                self.screen.addstr(4 + index, 2, f'item {item} {item_start}', curses.A_NORMAL)
 
         for index, item in enumerate(self.items):
             if self.current_option == index:
                 text_style = self.highlight
             else:
                 text_style = self.normal
-            self.screen.addstr(8 + index, 4, item.show(index), text_style)
+            try:
+                self.screen.addstr(int(item_start) + index, 2, item.show(index), text_style)
+            except Exception as ex:
+                print(ex)
 
-        screen_rows, screen_cols = CursesMenu.stdscr.getmaxyx()
         top_row = 0
-        if 6 + len(self.items) > screen_rows:
-            if screen_rows + self.current_option < 6 + len(self.items):
+        if 10 + len(self.items) > screen_rows:
+            if screen_rows + self.current_option < 10 + len(self.items):
                 top_row = self.current_option
             else:
-                top_row = 6 + len(self.items) - screen_rows
+                top_row = 10 + len(self.items) - screen_rows
 
         self.screen.refresh(top_row, 0, 0, 0, screen_rows - 1, screen_cols - 1)
 
