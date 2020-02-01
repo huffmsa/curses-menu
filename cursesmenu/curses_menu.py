@@ -202,11 +202,11 @@ class CursesMenu(object):
         item_start = 5
         self.screen.border(0)
         if self.title is not None:
-            self.screen.addstr(2, 2, f'{self.title} {screen_rows}', curses.A_NORMAL)
+            self.screen.addstr(2, 2, self.title, curses.A_NORMAL)
         if self.subtitle is not None:
             item_start = 5 + len(self.subtitle)
             for index, item in enumerate(self.subtitle):
-                self.screen.addstr(4 + index, 2, f'item {item} {item_start}', curses.A_NORMAL)
+                self.screen.addstr(4 + index, 2, item, curses.A_NORMAL)
 
         for index, item in enumerate(self.items):
             if self.current_option == index:
