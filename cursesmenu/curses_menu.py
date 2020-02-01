@@ -200,16 +200,16 @@ class CursesMenu(object):
 
         self.screen.border(0)
         if self.title is not None:
-            self.screen.addstr(2, 2, self.title, curses.A_NORMAL)
+            self.screen.addstr(2, 4, self.title, curses.A_NORMAL)
         if self.subtitle is not None:
-            self.screen.addstr(4, 2, self.subtitle, curses.A_BOLD)
+            self.screen.addstr(6, 2, self.subtitle, curses.A_BOLD)
 
         for index, item in enumerate(self.items):
             if self.current_option == index:
                 text_style = self.highlight
             else:
                 text_style = self.normal
-            self.screen.addstr(5 + index, 4, item.show(index), text_style)
+            self.screen.addstr(8 + index, 4, item.show(index), text_style)
 
         screen_rows, screen_cols = CursesMenu.stdscr.getmaxyx()
         top_row = 0
